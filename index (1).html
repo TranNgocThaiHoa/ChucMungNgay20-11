@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Chúc mừng Ngày Nhà giáo Việt Nam 20/11 — Gửi mẹ yêu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Dancing+Script:wght@500;600&family=Lora:ital,wght@0,500;1,400&display=swap" rel="stylesheet">
+<style>
+/* ===== Biến chung (tự co giãn theo màn hình máy tính / điện thoại) ===== */
+:root{
+  --vh:1vh;
+  --W:min(92vw,760px,calc(var(--vh)*66));      /* chiều rộng thân phong bì */
+  --cw:min(92vw,920px,calc(var(--vh)*105));    /* chiều rộng tấm thiệp khi đọc */
+  --ch:calc(var(--cw)/1.4);
+  --fs:calc(var(--cw)*.024);
+  --nau:#6b4423;--vang:#d4b06a;
+}
+@media (max-aspect-ratio:1/1) and (max-width:700px){   /* điện thoại dọc: thiệp cao hơn để đủ chỗ chữ */
+  :root{--cw:min(94vw,calc(var(--vh)*62));--ch:calc(var(--cw)*1.25);--fs:calc(var(--cw)*.037)}
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0}
+body{overflow:hidden;background:#eadcc6;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none;touch-action:manipulation}
+body.cho{cursor:pointer}
+@media (hover:none){body{cursor:pointer}}
+body.tat *{transition:none!important}
+
+/* ===== Nền vườn hoa + lớp phủ ===== */
+.bg{position:fixed;inset:0;background:url("background.jpg") center/cover no-repeat;transform:translateY(101%);transition:transform 1.9s cubic-bezier(.22,.7,.2,1)}
+.bg.vao{transform:none}
+.veil{position:fixed;inset:0;z-index:1;pointer-events:none;background:rgba(40,22,10,0);box-shadow:inset 0 0 14vmax rgba(25,12,5,.38);
+  backdrop-filter:blur(0);-webkit-backdrop-filter:blur(0);transition:background 1.4s,backdrop-filter 1.4s,-webkit-backdrop-filter 1.4s}
+.veil.dam{background:rgba(40,22,10,.42);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px)}
+
+/* ===== Phong bì (nhiều lớp SVG: ruột, nắp, thiệp, thân trước) ===== */
+.stage{position:fixed;inset:0;z-index:2;overflow:hidden;pointer-events:none}
+.env{position:absolute;left:50%;top:50%;width:var(--W);height:calc(var(--W)*.72);margin:calc(var(--W)*-.22) 0 0 calc(var(--W)/-2)}
+.envAnim{position:absolute;inset:0;opacity:0;transform:translateY(6%) scale(.86);transition:opacity 1.1s ease,transform 1.1s cubic-bezier(.22,.8,.2,1)}
+.envAnim.xuathien{opacity:1;transform:none}
+.bong{position:absolute;inset:0;border-radius:6px;box-shadow:0 26px 46px rgba(20,10,4,.42),0 5px 12px rgba(20,10,4,.3)}
+.flipper,.front,.back,.lop{position:absolute;left:0;top:0;width:100%;height:100%}
+.back{isolation:isolate;transform:rotateY(180deg);visibility:hidden}   /* lật ngược sẵn để khi xoay tới mặt sau sẽ đúng chiều */
+.z1{z-index:1}.z4{z-index:4}
+.nap{position:absolute;left:0;top:0;width:100%;height:auto;z-index:5;transform-origin:50% 0}
+.nap.mo{z-index:2}                                   /* nắp mở thì nằm sau tấm thiệp */
+.nap .tr{display:none}.nap.mo .tr{display:block}.nap.mo .ng{display:none}
+
+/* ===== Tấm thiệp HTML ===== */
+.card{position:absolute;left:50%;top:50%;z-index:3;width:var(--cw);height:var(--ch);overflow:hidden;
+  background:radial-gradient(ellipse at 50% 42%,#fffaf3 0,#FCF8F0 55%,#f5ead8 100%);
+  box-shadow:0 14px 30px rgba(35,18,6,.35),0 2px 6px rgba(35,18,6,.25)}
+.khung{position:absolute;inset:6.5% 5%;border:1px solid var(--vang)}
+.la{position:absolute;width:24%;aspect-ratio:1;pointer-events:none}
+.la.tl{top:-1%;left:-1%}.la.tr{top:-1%;right:-1%;transform:scaleX(-1);opacity:.75}
+.la.bl{bottom:-1%;left:-1%;transform:scaleY(-1);opacity:.55}.la.br{bottom:-1%;right:-1%;transform:rotate(180deg);opacity:.8}
+.noidung{position:absolute;inset:0;padding:10.5% 8.5% 9%;display:grid;grid-template-columns:1fr 2fr;gap:5%}
+.cot-anh{display:flex;align-items:center;justify-content:center;opacity:0;transform:translateX(-18px);transition:opacity 1s ease,transform 1s cubic-bezier(.22,.8,.2,1)}
+.card.hien .cot-anh{opacity:1;transform:none}
+.anh{margin:0;width:100%;aspect-ratio:2/3;background:#fff;padding:5%;transform:rotate(-2deg);box-shadow:0 8px 18px rgba(60,35,10,.3),0 1px 3px rgba(60,35,10,.25)}
+.anh img{width:100%;height:100%;object-fit:cover;display:block}
+.cot-chu{display:flex;flex-direction:column;height:100%;visibility:hidden;color:var(--nau)}
+.cot-chu.hien{visibility:visible}
+.viet{margin:0}
+.tieu-de{margin-top:auto;font:700 calc(var(--fs)*1.5)/1.15 "Cormorant Garamond",Georgia,serif;color:#5a3418}
+.gach{height:1px;width:46%;margin:.7em 0 .55em;background:linear-gradient(90deg,#c9a15f,transparent);transform:scaleX(0);transform-origin:left;transition:transform 1.4s ease}
+.gach.chay{transform:none}
+p.viet{font:500 var(--fs)/1.4 "Dancing Script","Segoe Script",cursive;margin-bottom:.45em}
+.ky{margin-top:auto!important;align-self:flex-end;text-align:right;font-weight:600!important;font-size:calc(var(--fs)*1.2)!important;color:#7a4a22}
+/* Chữ viết tay: mỗi dòng được "quét mực" từ trái sang phải bằng mặt nạ mềm */
+.ln{display:block;width:max-content;max-width:100%;white-space:nowrap;padding:.18em .12em .3em;margin:-.18em -.12em -.3em;
+  -webkit-mask-image:linear-gradient(90deg,#000 46%,transparent 53%);mask-image:linear-gradient(90deg,#000 46%,transparent 53%);
+  -webkit-mask-size:220% 100%;mask-size:220% 100%;-webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;-webkit-mask-position:100% 0;mask-position:100% 0}
+.ln.on{-webkit-mask-position:0 0;mask-position:0 0;transition:-webkit-mask-position var(--d,1s) cubic-bezier(.35,.1,.55,1),mask-position var(--d,1s) cubic-bezier(.35,.1,.55,1)}
+.ky .ln{margin-left:auto}
+
+/* ===== Gợi ý & nút ===== */
+.goi-y,.nut-lai{position:fixed;z-index:6;font-family:Lora,Georgia,serif;color:var(--nau);background:rgba(255,248,236,.86);border:1px solid rgba(212,176,106,.8);
+  border-radius:999px;box-shadow:0 6px 18px rgba(30,15,5,.25);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);opacity:0;pointer-events:none;transition:opacity .6s}
+.goi-y{left:50%;bottom:max(24px,env(safe-area-inset-bottom));transform:translateX(-50%);padding:.6em 1.4em;font-style:italic;font-size:15px;white-space:nowrap;animation:nhip 2.2s ease-in-out infinite}
+.goi-y.hien{opacity:1}
+.cham{display:none}
+@media (hover:none){.chuot{display:none}.cham{display:inline}}
+@keyframes nhip{50%{margin-bottom:6px}}
+.nut-lai{top:max(16px,env(safe-area-inset-top));right:16px;padding:.55em 1.2em;font-size:15px;font-weight:500;cursor:pointer}
+.nut-lai.hien{opacity:1;pointer-events:auto}
+.nut-lai:focus-visible{outline:2px solid var(--vang);outline-offset:3px}
+</style>
+</head>
+<body>
+
+<!-- Định nghĩa dùng chung: màu giấy, bóng đổ, hình nắp phong bì, họa tiết nhánh lá màu nước -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="gFr" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F1D9B8"/><stop offset="1" stop-color="#EBD0AB"/></linearGradient>
+    <linearGradient id="gNap" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#EBCFA8"/><stop offset="1" stop-color="#E4C59C"/></linearGradient>
+    <linearGradient id="gNapIn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DDB890"/><stop offset="1" stop-color="#D0A87E"/></linearGradient>
+    <linearGradient id="gIn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#C9A47A"/><stop offset="1" stop-color="#D8B48A"/></linearGradient>
+    <linearGradient id="gBot" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E9CBA4"/><stop offset="1" stop-color="#E2C199"/></linearGradient>
+    <linearGradient id="gSL" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#DDB98F"/><stop offset="1" stop-color="#E6C49C"/></linearGradient>
+    <linearGradient id="gSR" x1="1" y1="0" x2="0" y2="0"><stop offset="0" stop-color="#DDB98F"/><stop offset="1" stop-color="#E6C49C"/></linearGradient>
+    <filter id="mo" x="-20%" y="-20%" width="140%" height="140%"><feGaussianBlur stdDeviation="9"/></filter>
+    <clipPath id="cMieng"><path d="M0 0L360 360H640L1000 0Z"/></clipPath>
+    <path id="hNap" d="M0 0C22 62 52 96 92 134L408 450C444 486 472 508 500 508C528 508 556 486 592 450L908 134C948 96 978 62 1000 0Z"/>
+    <g id="la"><path d="M0 0C12-19 40-20 54 0C40 20 12 19 0 0Z"/><path d="M3 0H46" fill="none" stroke="#fff" stroke-opacity=".4" stroke-width=".8"/></g>
+    <g id="nhanh">
+      <path d="M6 6C60 40 110 90 160 190" fill="none" stroke="#c9a15f" stroke-width="1.4"/>
+      <g fill="#b07a45" opacity=".88"><use href="#la" transform="translate(30 22) rotate(-15)"/><use href="#la" transform="translate(90 80) rotate(105) scale(.95)"/><use href="#la" transform="translate(135 148) rotate(15) scale(.9)"/><use href="#la" transform="translate(150 178) rotate(72) scale(.7)"/></g>
+      <g fill="#e6cba6" opacity=".85"><use href="#la" transform="translate(30 22) rotate(95) scale(.9)"/><use href="#la" transform="translate(60 48) rotate(-10) scale(1.05)"/><use href="#la" transform="translate(115 112) rotate(118) scale(.95)"/><use href="#la" transform="translate(60 48) rotate(100) scale(.8)"/></g>
+    </g>
+  </defs>
+</svg>
+
+<div class="bg" id="bg"></div>
+<div class="veil" id="veil"></div>
+
+<main class="stage" id="stage">
+  <div class="env" id="env">
+    <div class="envAnim" id="envAnim">
+      <div class="bong" id="bong"></div>
+      <div class="flipper" id="flipper">
+
+        <!-- MẶT TRƯỚC phong bì (vẽ bằng SVG, chữ viết tay màu nâu) -->
+        <svg class="front" id="front" viewBox="0 0 1000 720">
+          <rect x="1" y="1" width="998" height="718" rx="5" fill="url(#gFr)" stroke="#B48E6A" stroke-width="2"/>
+          <path d="M12 14C28 140 28 580 12 706M988 14C972 140 972 580 988 706" fill="none" stroke="#C9A67C" stroke-width="1.5" opacity=".7"/>
+          <text x="525" y="654" textLength="423" lengthAdjust="spacingAndGlyphs" font-family="'Dancing Script',cursive" font-size="58" font-weight="500" fill="#5a3418">To: Mẹ yêu của con</text>
+        </svg>
+
+        <!-- MẶT SAU phong bì: ruột (z1) → nắp khi mở (z2) → thiệp (z3) → thân trước (z4) → nắp khi đóng (z5) -->
+        <div class="back" id="back">
+          <svg class="lop z1" viewBox="0 0 1000 720">
+            <rect x="1" y="1" width="998" height="718" rx="5" fill="url(#gIn)" stroke="#B48E6A" stroke-width="2"/>
+            <path d="M0 0L360 360H640L1000 0" fill="none" stroke="#3b2210" stroke-opacity=".5" stroke-width="26" filter="url(#mo)" clip-path="url(#cMieng)"/>
+          </svg>
+
+          <svg class="nap" id="nap" viewBox="0 0 1000 560">
+            <g class="ng">
+              <use id="nBong" href="#hNap" transform="translate(0 16)" fill="#4a2a10" opacity=".3" filter="url(#mo)"/>
+              <use href="#hNap" fill="url(#gNap)" stroke="#B48E6A" stroke-width="2"/>
+            </g>
+            <g class="tr">
+              <use href="#hNap" fill="#E8CAA4" stroke="#B48E6A" stroke-width="2"/>
+              <use href="#hNap" fill="url(#gNapIn)" transform="translate(500 0) scale(.9 .88) translate(-500 0)"/>
+            </g>
+            <use id="nToi" href="#hNap" fill="#2a1608" opacity="0"/>
+          </svg>
+
+          <article class="card" id="card">
+            <svg class="la tl" viewBox="0 0 220 220"><use href="#nhanh"/></svg>
+            <svg class="la tr" viewBox="0 0 220 220"><use href="#nhanh"/></svg>
+            <svg class="la bl" viewBox="0 0 220 220"><use href="#nhanh"/></svg>
+            <svg class="la br" viewBox="0 0 220 220"><use href="#nhanh"/></svg>
+            <div class="khung"></div>
+            <div class="noidung">
+              <div class="cot-anh">
+                <figure class="anh">
+                  <!-- THAY ẢNH CHÂN DUNG CỦA MẸ TẠI ĐÂY: đổi đường dẫn trong src, ví dụ src="anh-me.jpg" (nên dùng ảnh khổ đứng 2:3 hoặc 3:4) -->
+                  <img src="IMG_7023.JPG" alt="Ảnh chân dung của mẹ">
+                </figure>
+              </div>
+              <div class="cot-chu" id="cotChu">
+                <!-- CHỈNH SỬA LỜI CHÚC TẠI ĐÂY (tiêu đề, các đoạn lời chúc và dòng ký tên; mỗi phần có class "viet") -->
+                <h1 class="viet tieu-de">Chúc mừng Ngày Nhà giáo Việt Nam 20/11</h1>
+                <div class="gach" id="gach"></div>
+                <p class="viet">Nhân dịp ngày Nhà giáo Việt Nam 20/11, con trai Thái Hoà xin chúc mẹ ngày càng nhiều sức khoẻ để có thể luôn ở bên chăm sóc, chia sẻ cùng với hai anh em bọn con, tiền bán yến tiền lương chảy về đều như nước và con chúc mẹ một cuộc sống bình an, hạnh phúc. </p>
+                <p class="viet">Con yêu mẹ nhiều!</p>
+                
+                <p class="viet ky">Thái Hoà</p>
+              </div>
+            </div>
+          </article>
+
+          <svg class="lop z4" viewBox="0 0 1000 720">
+            <path d="M0 0L360 360L0 720Z" fill="url(#gSL)"/>
+            <path d="M1000 0L640 360L1000 720Z" fill="url(#gSR)"/>
+            <path d="M0 0L360 360M1000 0L640 360" fill="none" stroke="#B48E6A" stroke-width="2"/>
+            <path d="M0 720L330 390Q360 360 400 360H600Q640 360 670 390L1000 720Z" fill="url(#gBot)" stroke="#B48E6A" stroke-width="2"/>
+            <path d="M1 0V719H999V0" fill="none" stroke="#B48E6A" stroke-width="2"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<div class="goi-y" id="goiY"><span class="chuot">Nhấn chuột để tiếp tục...</span><span class="cham">Chạm vào màn hình để tiếp tục...</span></div>
+<button class="nut-lai" id="btnLai" type="button">↻ Xem lại từ đầu</button>
+
+<script>
+const $ = id => document.getElementById(id);
+const bg=$('bg'), veil=$('veil'), stage=$('stage'), env=$('env'), envAnim=$('envAnim'), bong=$('bong'),
+      flipper=$('flipper'), front=$('front'), back=$('back'), nap=$('nap'), nBong=$('nBong'), nToi=$('nToi'),
+      card=$('card'), cotChu=$('cotChu'), gach=$('gach'), goiY=$('goiY'), btnLai=$('btnLai');
+const ruot=back.querySelector('.z1'), thanTruoc=back.querySelector('.z4');
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+const rad = Math.PI/180;
+
+/* Chiều cao khung nhìn thật trên điện thoại (tránh lỗi thanh địa chỉ) */
+const capNhatVh = () => document.documentElement.style.setProperty('--vh', innerHeight*0.01+'px');
+capNhatVh();
+
+/* Đường cong gia tốc cubic-bezier cho các animation tự điều khiển bằng JS */
+function bez(x1,y1,x2,y2){
+  const cx=3*x1, bx=3*(x2-x1)-cx, ax=1-cx-bx, cy=3*y1, by=3*(y2-y1)-cy, ay=1-cy-by;
+  const X=t=>((ax*t+bx)*t+cx)*t, Y=t=>((ay*t+by)*t+cy)*t, dX=t=>(3*ax*t+2*bx)*t+cx;
+  return x => { let t=x; for(let i=0;i<8;i++){ const e=X(t)-x; if(Math.abs(e)<1e-5)break; const d=dX(t); if(Math.abs(d)<1e-6)break; t-=e/d; } return Y(Math.min(1,Math.max(0,t))); };
+}
+const chay = (ms, fn) => new Promise(ok => { const t0=performance.now();
+  (function f(now){ const p=Math.min(1,(now-t0)/ms); fn(p); p<1 ? requestAnimationFrame(f) : ok(); })(t0); });
+
+/* ===== Máy trạng thái =====
+   0: Giai đoạn 1 đang chạy | 1: chờ bấm lần 1 (lật) | 2: chờ bấm lần 2 (mở nắp)
+   3: chờ bấm lần 3 (rút thiệp) | 4: chờ bấm lần 4 (hiện nội dung) | 5: hoàn tất */
+let state = 0, busy = true;
+const batCho = b => { busy = !b; goiY.classList.toggle('hien', b); document.body.classList.toggle('cho', b); };
+
+/* ===== Nắp phong bì: xoay 3D quanh mép trên (0° đóng → 180° mở) ===== */
+function datNap(t, dy=0){
+  const mo = t >= 90;                      /* qua 90°: đổi sang mặt trong và đưa nắp ra sau tấm thiệp */
+  nap.classList.toggle('mo', mo);
+  nap.style.transform = `translateY(${dy}px) perspective(${env.offsetWidth*2.4}px) rotateX(${t}deg)`;
+  nToi.setAttribute('opacity', (.32*Math.sin(t*rad)).toFixed(3));              /* nắp tối dần khi dựng đứng */
+  nBong.setAttribute('opacity', (.3*Math.max(0, 1-t/50)).toFixed(3));          /* bóng của nắp tan dần khi nhấc lên */
+}
+const roiXuong = d => { ruot.style.transform = thanTruoc.style.transform = bong.style.transform = `translateY(${d}px)`; datNap(180, d); };
+
+/* ===== Tấm thiệp nằm trong phong bì ===== */
+const datThiep = (dx,dy,k) => card.style.transform = `translate(-50%,-50%) translate(${dx}px,${dy}px) scale(${k})`;
+function thiepTrong(){
+  const W=env.offsetWidth, ch=card.offsetHeight, cw=card.offsetWidth, k=Math.min(.8*W/cw, .56*W/ch);
+  return {W, ch, k, dy: ch*k/2 - .32*W};   /* mép trên thiệp nằm ngay dưới mép nắp, hoàn toàn nằm trong phong bì */
+}
+const thiepVaoPhongBi = () => { const g=thiepTrong(); datThiep(0,g.dy,g.k); };
+function canGiuaThiep(){
+  const r=env.getBoundingClientRect();
+  datThiep(document.documentElement.clientWidth/2-(r.left+r.width/2), innerHeight/2-(r.top+r.height/2), 1);
+}
+addEventListener('resize', () => { capNhatVh(); if (state < 4) thiepVaoPhongBi(); else if (!busy) canGiuaThiep(); });
+
+/* ===== Giai đoạn 1: nền trượt lên, phong bì hiện ra (tự động) ===== */
+const taiAnh = Promise.race([
+  Promise.all([
+    new Promise(ok => { const i=new Image(); i.onload=ok;
+      i.onerror=()=>{ console.warn('Không tìm thấy background.jpg — hãy để ảnh cùng thư mục với index.html'); ok(); }; i.src='background.jpg'; }),
+    document.fonts ? Promise.all([document.fonts.load('500 40px "Dancing Script"','Mẹ yêu của con'), document.fonts.load('700 20px "Cormorant Garamond"','Chúc mừng')]).catch(()=>0) : 0
+  ]),
+  sleep(6000)
+]);
+async function giaiDoan1(){
+  state = 0; busy = true;
+  thiepVaoPhongBi();
+  await taiAnh; await sleep(200);
+  bg.classList.add('vao');            await sleep(1900);
+  envAnim.classList.add('xuathien');  await sleep(1200);
+  state = 1; batCho(true);
+}
+
+/* ===== Giai đoạn 2: xoay 3D trọn một vòng rồi lật sang mặt sau ===== */
+async function giaiDoan2(){
+  batCho(false);
+  const P = env.offsetWidth*2.2, ease = bez(.65,0,.35,1);
+  await chay(1800, p => {
+    const a = 540*ease(p), m = a % 360, truoc = m < 90 || m > 270;     /* chỉ hiện đúng một mặt tại mỗi thời điểm */
+    front.style.visibility = truoc ? 'visible' : 'hidden';
+    back.style.visibility  = truoc ? 'hidden' : 'visible';
+    flipper.style.transform = `perspective(${P}px) rotateY(${a}deg) scale(${1+.06*Math.sin(Math.PI*p)})`;
+    bong.style.transform = `scaleX(${Math.max(.15, Math.abs(Math.cos(a*rad)))})`;
+  });
+  flipper.style.transform = ''; back.style.transform = 'none'; bong.style.transform = '';   /* 540° ≡ 180°: trả về trạng thái phẳng, hình không đổi */
+  front.style.visibility = 'hidden'; back.style.visibility = 'visible';
+  state = 2; batCho(true);
+}
+
+/* ===== Giai đoạn 3: nắp phong bì mở ra thật (xoay 180°), lộ thiệp bên trong ===== */
+async function giaiDoan3(){
+  batCho(false);
+  const e = bez(.4,0,.2,1);
+  await chay(1250, p => datNap(180*e(p)));
+  state = 3; batCho(true);
+}
+
+/* ===== Giai đoạn 4: rút thiệp lên, phong bì rỗng (còn mở nắp) trượt xuống ===== */
+async function giaiDoan4(){
+  batCho(false); veil.classList.add('dam');
+  const g = thiepTrong(), W = g.W, dyMid = -.37*W - g.ch*g.k/2;      /* đáy thiệp vừa thoát khỏi miệng phong bì */
+  const eA = bez(.45,0,.25,1), eC = bez(.4,0,.2,1), eR = bez(.5,0,.9,.55);
+  await chay(1100, p => datThiep(0, g.dy + (dyMid-g.dy)*eA(p), g.k));
+  card.style.zIndex = 10;                                            /* thiệp ra khỏi phong bì: nằm trên cùng */
+  const r = env.getBoundingClientRect();
+  const dxF = document.documentElement.clientWidth/2 - (r.left+r.width/2), dyF = innerHeight/2 - (r.top+r.height/2);
+  const roi = innerHeight - r.top + .6*W;
+  await chay(1400, p => {
+    const c = eC(p);
+    datThiep(dxF*c, dyMid + (dyF-dyMid)*c, g.k + (1-g.k)*c);
+    roiXuong(roi*eR(p)); bong.style.opacity = 1-p;
+  });
+  state = 4; batCho(true);
+}
+
+/* ===== Giai đoạn 5: ảnh hiện ra, rồi lời chúc được "viết tay" ===== */
+function chiaDong(el){
+  const goc = el.dataset.goc = el.textContent.trim();
+  el.innerHTML = goc.split(/\s+/).map(t => `<span class="w">${t}</span>`).join(' ');
+  const dong = []; let top = null;
+  el.querySelectorAll('.w').forEach(w => {
+    if (top === null || Math.abs(w.offsetTop - top) > 4){ top = w.offsetTop; dong.push([]); }
+    dong[dong.length-1].push(w.textContent);
+  });
+  el.innerHTML = dong.map(d => `<span class="ln">${d.join(' ')}</span>`).join('');
+  return [...el.querySelectorAll('.ln')];
+}
+async function giaiDoan5(){
+  batCho(false);
+  card.classList.add('hien');
+  await sleep(1200);
+  const nhom = [...document.querySelectorAll('.viet')].map(e => ({e, lns: chiaDong(e)}));
+  cotChu.classList.add('hien');
+  for (const g of nhom){
+    const laTieuDe = g.e.classList.contains('tieu-de');
+    if (laTieuDe) gach.classList.add('chay');
+    for (const ln of g.lns){
+      const ms = Math.max(420, ln.offsetWidth*2.6);
+      ln.style.setProperty('--d', ms+'ms'); void ln.offsetWidth;
+      ln.classList.add('on');
+      await sleep(ms+60);
+    }
+    await sleep(laTieuDe ? 550 : 320);
+  }
+  nhom.forEach(g => g.e.textContent = g.e.dataset.goc);    /* trả lại văn bản gốc để co giãn theo màn hình */
+  state = 5; busy = false; document.body.classList.remove('cho');
+  btnLai.classList.add('hien');
+}
+
+/* ===== Xem lại từ đầu ===== */
+async function datLai(){
+  if (busy) return;
+  busy = true; btnLai.classList.remove('hien'); goiY.classList.remove('hien'); veil.classList.remove('dam');
+  stage.style.transition = 'opacity .6s'; stage.style.opacity = 0;
+  bg.style.transitionDuration = '.9s'; bg.classList.remove('vao');
+  await sleep(1000);
+  document.body.classList.add('tat');
+  envAnim.classList.remove('xuathien');
+  flipper.style.transform = ''; back.style.transform = ''; bong.style.transform = ''; bong.style.opacity = '';
+  front.style.visibility = 'visible'; back.style.visibility = 'hidden';
+  ruot.style.transform = thanTruoc.style.transform = ''; datNap(0);
+  card.style.zIndex = ''; card.classList.remove('hien'); cotChu.classList.remove('hien'); gach.classList.remove('chay');
+  stage.style.transition = ''; stage.style.opacity = ''; bg.style.transitionDuration = '';
+  void stage.offsetWidth;
+  document.body.classList.remove('tat');
+  giaiDoan1();
+}
+
+/* ===== Bấm chuột / chạm màn hình / phím cách / Enter ===== */
+function tiep(){ if (busy) return; ({1:giaiDoan2, 2:giaiDoan3, 3:giaiDoan4, 4:giaiDoan5}[state] || (()=>{}))(); }
+document.addEventListener('click', e => { if (!e.target.closest('#btnLai')) tiep(); });
+document.addEventListener('keydown', e => { if ((e.key === ' ' || e.key === 'Enter') && !e.target.closest('button')){ e.preventDefault(); tiep(); } });
+btnLai.addEventListener('click', datLai);
+
+giaiDoan1();   /* Giai đoạn 1 chạy tự động khi mở trang */
+</script>
+</body>
+</html>
